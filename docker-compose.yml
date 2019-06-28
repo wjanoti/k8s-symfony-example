@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  nginx:
+    build:
+      dockerfile: ./docker/nginx/Dockerfile
+      context: .
+      target: dev
+    volumes:
+      - .:/app
+    links:
+      - php-fpm:php-fpm
+    expose:
+      - 9000
+    ports:
+      - 80:80
+  php-fpm:
+    build:
+      dockerfile: ./docker/php-fpm/Dockerfile
+      context: .
+      target: dev
+    expose:
+      - 9000
+    volumes:
+      - .:/app
