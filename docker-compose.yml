@@ -18,6 +18,7 @@ services:
       dockerfile: php-fpm/Dockerfile
       context: docker
       target: dev
+    #image: wjanoti/k8s-symfony-example-app:0.1.0
     expose:
       - 9000
     volumes:
