@@ -10,20 +10,17 @@ RUN apk update \
     libzip-dev \
     libcurl
 
-# PHP extensions
+# Xdebug
 RUN pecl install xdebug-2.5.3 && \
-    docker-php-ext-enable xdebug && \
-    docker-php-ext-install mcrypt \
-    pdo_mysql \
-    mbstring \
-    zip \
-    sockets
+    docker-php-ext-enable xdebug
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Config files and code
-COPY docker/php-fpm/files/extra.ini /usr/local/etc/php/conf.d
-COPY docker/php-fpm/files/xdebug.ini /usr/local/etc/php/conf.d
-COPY docker/php-fpm/files/www.conf /usr/local/etc/php-fpm.d
+COPY php-fpm/files/extra.ini /usr/local/etc/php/conf.d
+COPY php-fpm/files/xdebug.ini /usr/local/etc/php/conf.d
+COPY php-fpm/files/www.conf /usr/local/etc/php-fpm.d
 COPY . /app
+
+WORKDIR /app
